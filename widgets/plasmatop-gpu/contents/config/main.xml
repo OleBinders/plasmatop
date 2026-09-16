@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+    <kcfgfile name=""/>
+
+    <group name="General">
+        <!--
+            Poll interval in seconds. Each tick reads a handful of sysfs
+            files plus a filtered scan of /proc/*/fdinfo across all
+            processes (see contents/scripts/gpu-stats.sh) — verified live
+            at ~0.1s wall time on this machine, so 1.5-2s keeps duty cycle
+            low while still feeling responsive for a panel widget.
+        -->
+        <entry name="pollInterval" type="Double">
+            <default>1.5</default>
+        </entry>
+
+        <!--
+            Opacity of the AsciiBox frame's fill (0.0 = fully transparent,
+            1.0 = opaque black), so the widget can sit over an arbitrary
+            desktop wallpaper without a solid black card. Default fully
+            transparent per product owner's original ask; text/glyphs get a
+            dark outline (see main.qml, BarMeter.qml) to stay legible over
+            an arbitrary wallpaper at low opacity.
+        -->
+        <entry name="backgroundOpacity" type="Double">
+            <default>0.0</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+
+        <!--
+            User-configurable replacements for ColorScale's hardcoded
+            btop-derived defaults (shared/theme/ColorScale.qml), so the
+            product owner can pick their own good/warn/bad meter colors.
+            Defaults match ColorScale.qml's current defaults exactly, so
+            an un-configured widget looks identical to before.
+        -->
+        <entry name="meterGoodColor" type="Color">
+            <default>#77ca9b</default>
+        </entry>
+        <entry name="meterWarnColor" type="Color">
+            <default>#cbc06c</default>
+        </entry>
+        <entry name="meterBadColor" type="Color">
+            <default>#dc4c4c</default>
+        </entry>
+
+        <!--
+            Color for the widget's text: main.qml's primary labels
+            ("Utilization" etc.) and value readouts (MHz/W), plus
+            BarMeter's own value-readout label ("42%"/"51.0°C"). Default
+            matches the previous hardcoded brighter value color (#eeeeee)
+            so an un-configured widget looks identical to before. Primary
+            labels are rendered at reduced opacity of this same color
+            (see main.qml's secondaryFontColor) rather than via a second
+            config entry, to keep exactly one user-facing text-color
+            control.
+        -->
+        <entry name="fontColor" type="Color">
+            <default>#eeeeee</default>
+        </entry>
+
+        <!--
+            Color for the AsciiBox frame's border glyphs (┌─┐│└─┘) and the
+            compact (panel) view's matching "[...]" brackets. Default
+            matches the previous hardcoded border color (#606060) so an
+            un-configured widget looks identical to before. Deliberately
+            NOT applied to AsciiBox's titleColor — see main.qml/AsciiBox
+            usage comment for why the title stays a fixed bright accent
+            instead of tracking this value.
+        -->
+        <entry name="frameColor" type="Color">
+            <default>#606060</default>
+        </entry>
+
+        <!--
+            Background/track color for BOTH BarMeter's bar track (compact
+            view + fullRepresentation's temp bars) and Sparkline's graph
+            background (the utilization/VRAM mirrored graph), one shared
+            control covering "the graph and the bars" together, per
+            product-owner ask, rather than two separate entries. Carries an
+            alpha channel (KConfigXT Color entries round-trip QColor's alpha
+            through the config dialog's alpha-enabled ColorDialog) so the
+            product owner can dial in transparency as well as hue. Default
+            matches BarMeter's previous hardcoded track color (#404040)
+            exactly, so an un-configured widget's bars look identical to
+            before; Sparkline's own previous default (#2a2a2a) shifts
+            slightly to match, intentional, to keep this to one shared
+            control instead of two.
+        -->
+        <entry name="meterBackgroundColor" type="Color">
+            <default>#404040</default>
+        </entry>
+
+        <!--
+            Per-metric good/warn threshold fractions (0.0-1.0 of each
+            metric's own scale), added for the generic metric-row
+            architecture (R5/R6, BACKLOG Epic 1.6). Previously hardcoded
+            as root readonly properties in main.qml (utilization: 0.6/0.85
+            inlined directly on two BarMeter instances; both temperatures
+            sharing one pkg/vram-wide 0.60/0.85 pair) — product owner
+            explicitly asked for these to be user-configurable, ideally
+            per-metric, not just the good/warn/bad COLORS above (which
+            were already configurable). Defaults match the previous
+            hardcoded values exactly, so an un-configured widget's
+            thresholds look identical to before. Only utilization,
+            package temperature, and VRAM temperature get their own pair —
+            the metrics that meaningfully vary by user preference/hardware
+            (frequency and power draw are plain-text readouts with no
+            severity meter at all under the new layout, see main.qml).
+        -->
+        <entry name="utilGoodMax" type="Double">
+            <default>0.6</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+        <entry name="utilWarnMax" type="Double">
+            <default>0.85</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+        <entry name="tempPkgGoodMax" type="Double">
+            <default>0.6</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+        <entry name="tempPkgWarnMax" type="Double">
+            <default>0.85</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+        <entry name="tempVramGoodMax" type="Double">
+            <default>0.6</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+        <entry name="tempVramWarnMax" type="Double">
+            <default>0.85</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+        <entry name="vramGoodMax" type="Double">
+            <default>0.6</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+        <entry name="vramWarnMax" type="Double">
+            <default>0.85</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+
+        <!--
+            VRAM total capacity in GiB, Epic 1.7. No sysfs or fdinfo source
+            exists for total VRAM capacity on the xe driver (confirmed
+            absent again, research/r2 section 2); nvtop itself gets this
+            figure via a DRM_XE_DEVICE_QUERY_MEM_REGIONS ioctl on an open
+            DRM fd (verified by reading nvtop's own source,
+            src/extract_gpuinfo_intel_xe.c), which is not practical to
+            reproduce from this project's bundled-bash-script data-sourcing
+            pattern (no ioctl builtin in bash; a compiled helper would be a
+            new architecture element just for one static number). Per R2's
+            explicitly-sanctioned fallback, this is instead a configurable
+            default seeded from nvtop's own live-observed figure for this
+            exact GPU (captured twice on this machine, consistently:
+            "11.930Gi" for the Arc B580); correct for this machine's
+            hardware out of the box, user-overridable if the widget is ever
+            used on different GPU hardware.
+        -->
+        <entry name="vramTotalGib" type="Double">
+            <default>11.93</default>
+            <min>0.1</min>
+            <max>256.0</max>
+        </entry>
+    </group>
+</kcfg>

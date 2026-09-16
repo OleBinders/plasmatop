@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+    <kcfgfile name=""/>
+
+    <group name="General">
+        <!--
+            Poll interval in seconds. Each tick reads /proc/stat (13 lines),
+            12 scaling_cur_freq files, and one hwmon temp file — measured
+            9ms wall time on this machine (research/r8-cpu-telemetry.md
+            §1), far cheaper than GPU's fdinfo scan, so this could go lower
+            than GPU's default; kept at the same 1.5s default for
+            consistency across the widget suite rather than because CPU
+            needs it.
+        -->
+        <entry name="pollInterval" type="Double">
+            <default>1.5</default>
+        </entry>
+
+        <!--
+            Opacity of the AsciiBox frame's fill (0.0 = fully transparent,
+            1.0 = opaque black), same meaning/default as plasmatop-gpu's
+            identical entry.
+        -->
+        <entry name="backgroundOpacity" type="Double">
+            <default>0.0</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+
+        <!--
+            User-configurable replacements for ColorScale's hardcoded
+            btop-derived defaults (shared/theme/ColorScale.qml). Defaults
+            match ColorScale.qml's own defaults exactly.
+        -->
+        <entry name="meterGoodColor" type="Color">
+            <default>#77ca9b</default>
+        </entry>
+        <entry name="meterWarnColor" type="Color">
+            <default>#cbc06c</default>
+        </entry>
+        <entry name="meterBadColor" type="Color">
+            <default>#dc4c4c</default>
+        </entry>
+
+        <!--
+            Color for the widget's text: header/labels and value readouts,
+            plus every BarMeter's own value-readout label
+            ("C0 42%"/"35.0°C"). Default matches plasmatop-gpu's identical
+            entry.
+        -->
+        <entry name="fontColor" type="Color">
+            <default>#eeeeee</default>
+        </entry>
+
+        <!--
+            Color for the AsciiBox frame's border glyphs (┌─┐│└─┘) and the
+            compact (panel) view's matching "[...]" brackets. Default
+            matches plasmatop-gpu's identical entry.
+        -->
+        <entry name="frameColor" type="Color">
+            <default>#606060</default>
+        </entry>
+
+        <!--
+            Background/track color for every BarMeter in this widget (the
+            12-core grid cells and the package-temp row), one shared
+            control, same "day-one feature, carried over from GPU" ask as
+            the product owner's spec for this widget. Carries an alpha
+            channel (KConfigXT Color entries round-trip QColor's alpha
+            through the config dialog's alpha-enabled ColorDialog). Default
+            matches BarMeter's own hardcoded default (#404040).
+        -->
+        <entry name="meterBackgroundColor" type="Color">
+            <default>#404040</default>
+        </entry>
+
+        <!--
+            Per-metric good/warn threshold fractions (0.0-1.0 of each
+            metric's own scale). utilGoodMax/utilWarnMax apply to ALL
+            per-core bars via one shared pair (not 12 individual ones,
+            per spec) since they all share the same 0-100% utilization
+            scale. tempGoodMax/tempWarnMax apply to the single package
+            temperature row. Defaults match plasmatop-gpu's identical
+            entries (0.6/0.85).
+        -->
+        <entry name="utilGoodMax" type="Double">
+            <default>0.6</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+        <entry name="utilWarnMax" type="Double">
+            <default>0.85</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+        <entry name="tempGoodMax" type="Double">
+            <default>0.6</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+        <entry name="tempWarnMax" type="Double">
+            <default>0.85</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+    </group>
+</kcfg>

@@ -1,0 +1,19 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Id": "com.olebinders.plasmatop.disk",
+        "Name": "plasmatop Disk",
+        "Description": "btop-style disk usage monitor — one usage bar per real mounted drive",
+        "Category": "System Information",
+        "Icon": "drive-harddisk",
+        "Authors": [
+            {
+                "Name": "Ole Hetland",
+                "Email": "ole.a.hetland@gmail.com"
+            }
+        ],
+        "Version": "0.1.0",
+        "License": "MIT"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

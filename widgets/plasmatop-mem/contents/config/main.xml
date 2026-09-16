@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+    <kcfgfile name=""/>
+
+    <group name="General">
+        <!--
+            Poll interval in seconds. Each tick reads /proc/meminfo once
+            (a single, cheap file read), so this can be slower than
+            plasmatop-gpu's 1.5s default without missing anything
+            meaningful; memory/swap totals do not burst the way GPU
+            utilization does.
+        -->
+        <entry name="pollInterval" type="Double">
+            <default>2.0</default>
+        </entry>
+
+        <!--
+            Opacity of the AsciiBox frame's fill (0.0 = fully transparent,
+            1.0 = opaque black), same meaning as plasmatop-gpu's entry of
+            the same name.
+        -->
+        <entry name="backgroundOpacity" type="Double">
+            <default>0.0</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+
+        <!--
+            User-configurable replacements for ColorScale's hardcoded
+            btop-derived defaults (shared/theme/ColorScale.qml). Defaults
+            match ColorScale.qml's own defaults exactly, so an
+            un-configured widget looks identical to before this control
+            existed.
+        -->
+        <entry name="meterGoodColor" type="Color">
+            <default>#77ca9b</default>
+        </entry>
+        <entry name="meterWarnColor" type="Color">
+            <default>#cbc06c</default>
+        </entry>
+        <entry name="meterBadColor" type="Color">
+            <default>#dc4c4c</default>
+        </entry>
+
+        <!--
+            Color for the widget's text: both MetricRow value/label
+            readouts ("RAM 62% (10.1/16.3 GiB)"). Default matches the
+            other plasmatop widgets' fontColor default (#eeeeee).
+        -->
+        <entry name="fontColor" type="Color">
+            <default>#eeeeee</default>
+        </entry>
+
+        <!--
+            Color for the AsciiBox frame's border glyphs and the compact
+            (panel) view's matching bracket characters. Default matches
+            the other plasmatop widgets' frameColor default (#606060).
+        -->
+        <entry name="frameColor" type="Color">
+            <default>#606060</default>
+        </entry>
+
+        <!--
+            Background/track color for both MetricRow bars' track fill.
+            Carries an alpha channel (KConfigXT Color entries round-trip
+            QColor's alpha through the config dialog's alpha-enabled
+            ColorDialog) so transparency as well as hue can be dialed in,
+            matching plasmatop-gpu's meterBackgroundColor entry. Default
+            matches BarMeter's own hardcoded track color (#404040).
+        -->
+        <entry name="meterBackgroundColor" type="Color">
+            <default>#404040</default>
+        </entry>
+
+        <!--
+            Per-metric good/warn threshold fractions (0.0 to 1.0 of each
+            metric's own used% scale). Swap's defaults are set noticeably
+            lower than RAM's: any nonzero swap usage means the kernel
+            already decided it needed to push pages out of RAM, which is
+            generally worse news than the same percentage of RAM simply
+            being in use (Linux uses "spare" RAM for page cache by design,
+            so high RAM% alone is normal/healthy). RAM keeps this
+            project's usual 0.6/0.85 good/warn split; swap uses a lower
+            0.3/0.6 split so its bar reads amber/red noticeably sooner.
+        -->
+        <entry name="ramGoodMax" type="Double">
+            <default>0.6</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+        <entry name="ramWarnMax" type="Double">
+            <default>0.85</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+        <entry name="swapGoodMax" type="Double">
+            <default>0.3</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+        <entry name="swapWarnMax" type="Double">
+            <default>0.6</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+    </group>
+</kcfg>

@@ -1,0 +1,19 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Id": "com.olebinders.plasmatop.cpu",
+        "Name": "plasmatop CPU",
+        "Description": "btop-style CPU monitor — per-core utilization, package temperature, and frequency",
+        "Category": "System Information",
+        "Icon": "utilities-system-monitor",
+        "Authors": [
+            {
+                "Name": "Ole Hetland",
+                "Email": "ole.a.hetland@gmail.com"
+            }
+        ],
+        "Version": "0.1.0",
+        "License": "MIT"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

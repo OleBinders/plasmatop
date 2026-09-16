@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+    <kcfgfile name=""/>
+
+    <group name="General">
+        <!--
+            Poll interval in seconds. Each tick shells out to df once per
+            surviving mount (see contents/scripts/disk-stats.sh) — cheap,
+            but disk space also changes far more slowly than CPU/GPU/memory
+            ever do, so this defaults noticeably slower than every other
+            plasmatop widget's poll interval (GPU 1.5s, MEM 2.0s) rather
+            than matching them out of habit.
+        -->
+        <entry name="pollInterval" type="Double">
+            <default>5.0</default>
+        </entry>
+
+        <!--
+            Opacity of the AsciiBox frame's fill (0.0 = fully transparent,
+            1.0 = opaque black), same meaning as every other plasmatop
+            widget's entry of the same name.
+        -->
+        <entry name="backgroundOpacity" type="Double">
+            <default>0.0</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+
+        <!--
+            User-configurable replacements for ColorScale's hardcoded
+            btop-derived defaults (shared/theme/ColorScale.qml). Defaults
+            match ColorScale.qml's own defaults exactly, so an
+            un-configured widget looks identical to before this control
+            existed.
+        -->
+        <entry name="meterGoodColor" type="Color">
+            <default>#77ca9b</default>
+        </entry>
+        <entry name="meterWarnColor" type="Color">
+            <default>#cbc06c</default>
+        </entry>
+        <entry name="meterBadColor" type="Color">
+            <default>#dc4c4c</default>
+        </entry>
+
+        <!--
+            Color for the widget's text: each mount row's own label/percent
+            readout ("ROOT 64%"). Default matches every other plasmatop
+            widget's fontColor default (#eeeeee).
+        -->
+        <entry name="fontColor" type="Color">
+            <default>#eeeeee</default>
+        </entry>
+
+        <!--
+            Color for the AsciiBox frame's border glyphs and the compact
+            (panel) view's matching bracket characters. Default matches
+            every other plasmatop widget's frameColor default (#606060).
+        -->
+        <entry name="frameColor" type="Color">
+            <default>#606060</default>
+        </entry>
+
+        <!--
+            Background/track color for every mount row's BarMeter track.
+            Carries an alpha channel (KConfigXT Color entries round-trip
+            QColor's alpha through the config dialog's alpha-enabled
+            ColorDialog) so transparency as well as hue can be dialed in,
+            matching every other plasmatop widget's meterBackgroundColor
+            entry. Default matches BarMeter's own hardcoded track color
+            (#404040).
+        -->
+        <entry name="meterBackgroundColor" type="Color">
+            <default>#404040</default>
+        </entry>
+
+        <!--
+            Single shared good/warn threshold pair (0.0 to 1.0 of each
+            mount's own used-percent scale) applied to EVERY mount row —
+            not one pair per mount, which wouldn't scale to a variable,
+            runtime-unknown list of drives (same reasoning as CPU's shared
+            per-core threshold pair, see shared/theme/CoreGrid.qml).
+            Defaults (0.80/0.90) sit noticeably higher than this project's
+            usual 0.6/0.85 CPU/GPU/RAM split: disk space is the classic
+            "fine until it very suddenly isn't" resource — a drive sitting
+            at 70-80% full is still perfectly normal daily operation
+            (unlike 80% sustained CPU or RAM pressure, which usually does
+            mean something is actively struggling right now), so the
+            amber/red bands are pushed out to the ~80-90%+ range where
+            running out of space becomes a genuine near-term concern.
+        -->
+        <entry name="diskGoodMax" type="Double">
+            <default>0.80</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+        <entry name="diskWarnMax" type="Double">
+            <default>0.90</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+    </group>
+</kcfg>

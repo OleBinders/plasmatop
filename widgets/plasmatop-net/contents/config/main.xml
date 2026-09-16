@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+    <kcfgfile name=""/>
+
+    <group name="General">
+        <!--
+            Poll interval in seconds. Each tick re-detects the default
+            route interface (/proc/net/route) and reads one line of
+            /proc/net/dev, both cheap reads (single-digit milliseconds on
+            this machine) — same default as every other plasmatop widget,
+            for consistency across the suite rather than because this
+            widget needs it.
+        -->
+        <entry name="pollInterval" type="Double">
+            <default>1.5</default>
+        </entry>
+
+        <!--
+            Opacity of the AsciiBox frame's fill (0.0 = fully transparent,
+            1.0 = opaque black), same meaning/default as the other
+            plasmatop widgets' identical entry.
+        -->
+        <entry name="backgroundOpacity" type="Double">
+            <default>0.0</default>
+            <min>0.0</min>
+            <max>1.0</max>
+        </entry>
+
+        <!--
+            User-configurable replacements for ColorScale's hardcoded
+            btop-derived defaults (shared/theme/ColorScale.qml). Defaults
+            match ColorScale.qml's own defaults exactly, and the other
+            plasmatop widgets' identical entries.
+        -->
+        <entry name="meterGoodColor" type="Color">
+            <default>#77ca9b</default>
+        </entry>
+        <entry name="meterWarnColor" type="Color">
+            <default>#cbc06c</default>
+        </entry>
+        <entry name="meterBadColor" type="Color">
+            <default>#dc4c4c</default>
+        </entry>
+
+        <!--
+            Color for the widget's text: the box title area, the
+            interface-name header readout, and the up/down corner value
+            readouts on the graph. Default matches the other plasmatop
+            widgets' identical entry.
+        -->
+        <entry name="fontColor" type="Color">
+            <default>#eeeeee</default>
+        </entry>
+
+        <!--
+            Color for the AsciiBox frame's border glyphs and the compact
+            (panel) view's matching bracket characters. Default matches
+            the other plasmatop widgets' identical entry.
+        -->
+        <entry name="frameColor" type="Color">
+            <default>#606060</default>
+        </entry>
+
+        <!--
+            Background/track color for the up/down mirrored graph. Carries
+            an alpha channel (KConfigXT Color entries round-trip QColor's
+            alpha through the config dialog's alpha-enabled ColorDialog).
+            Default matches the other plasmatop widgets' identical entry.
+        -->
+        <entry name="meterBackgroundColor" type="Color">
+            <default>#404040</default>
+        </entry>
+
+        <!--
+            Deliberately NO per-metric good/warn threshold entries for this
+            widget, unlike GPU/CPU's utilGoodMax/tempGoodMax etc. Those
+            widgets' thresholds are fractions of a fixed, meaningful scale
+            (0-100% utilization, 0-100 C). Throughput has no such natural
+            ceiling — this widget's graph instead auto-scales its own
+            maxValue to recent peak throughput (see main.qml's
+            "_scaleMax" comment). Tried making good/warn/bad a fraction of
+            that auto-scaled ceiling first, but that turned out actively
+            misleading once checked live: the ceiling snaps up to match
+            whatever the newest sample is, so an ordinary traffic burst
+            setting a new peak is always at ~100% of its own just-updated
+            scale, painting it "bad" red for no real reason. main.qml now
+            fixes the graph to always render in the single good color —
+            the auto-scaling axis itself already signals "how busy" —
+            rather than exposing a configurable split here that would
+            inherit that same misleading behavior. See main.qml's
+            throughputGoodMax/throughputWarnMax comment for the full story.
+        -->
+    </group>
+</kcfg>
