@@ -5,6 +5,8 @@ monitor widgets with ones that (a) actually support the Intel Arc B580 GPU
 and (b) look like a proper terminal dashboard (bashtop/btop-style bar
 graphs and colors) instead of the generic default Plasma look.
 
+![App screenshot](docs/visualization.png)
+
 ## Why
 
 - Plasma's built-in CPU/Mem/Net/Disk widgets work fine, but the built-in GPU
