@@ -49,10 +49,3 @@ graphs and colors) instead of the generic default Plasma look.
 - `shared/theme/` — shared QML components (bar meters, graphs, color scales,
   fonts) reused across all five widgets.
 - `tools/` — dev scripts (install/reload/test helpers).
-
-## Process
-
-Run as an agile project: the user is product owner, Claude is
-orchestrator/PM directing researcher, coder, tester, reviewer, and
-technical-writer sub-agents per sprint. See `SPRINTS.md` for current status
-and `AGENTS.md` for how sub-agent work in this directory should be scoped.
